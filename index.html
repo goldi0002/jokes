@@ -3,186 +3,197 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Joke Generator | Free Multi-Language Joke App</title>
-    <meta name="description" content="Enjoy unlimited free jokes with our Random Joke Generator. Multi-language support, instant jokes, favorites and sharing. No signup required.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Joke Generator</title>
+    <meta name="description" content="Mobile app-style joke generator with clean design">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#121212">
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 
     <style>
         :root {
-            --primary: #7c3aed;
-            --primary-light: #8b5cf6;
-            --secondary: #f59e0b;
-            --dark: #1f2937;
-            --light: #f8fafc;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-surface: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #bb86fc;
+            --accent-light: #d0b8ff;
+            --success: #03dac6;
+            --warning: #ffb74d;
+            --error: #cf6679;
+            --border-radius: 16px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
         }
 
         * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
-            min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            padding: 0 var(--spacing-md);
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow-x: hidden;
+            justify-content: space-between;
+            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        body::before {
-            content: "😂 🤣 😄 😁 😆";
-            position: absolute;
-            top: 20px;
-            left: 0;
-            width: 100%;
-            font-size: 60px;
-            text-align: center;
-            opacity: 0.1;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .app-container {
-            max-width: 800px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        .main-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            animation: slideIn 0.5s ease-out;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .card-header-custom {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-header-custom::before {
-            content: "😂 🤣 😄";
-            position: absolute;
-            font-size: 80px;
-            opacity: 0.2;
-            top: 10px;
-            left: 20px;
-            transform: rotate(-10deg);
-        }
-
-        .card-header-custom::after {
-            content: "😆 😁 🤪";
-            position: absolute;
-            font-size: 80px;
-            opacity: 0.2;
-            bottom: 10px;
-            right: 20px;
-            transform: rotate(10deg);
-        }
-
-        .card-header-custom h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 0 0 10px 0;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-header-custom p {
-            margin: 0;
-            opacity: 0.95;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card-body-custom {
-            padding: 40px 30px;
-        }
-
-        .language-section {
-            margin-bottom: 30px;
-        }
-
-        .language-section label {
-            display: block;
+        .time {
             font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 15px;
         }
 
-        .form-select {
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            padding: 12px 16px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background-color: white;
+        .status-icons {
+            display: flex;
+            gap: 5px;
         }
 
-        .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.3rem rgba(124, 58, 237, 0.15);
+        /* App Container */
+        .app-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
         }
 
-        .joke-display {
-            background: linear-gradient(135deg, #f3f4f6 0%, #f8fafc 100%);
-            border-radius: 20px;
-            padding: 40px 35px;
-            min-height: 250px;
+        /* Header */
+        .app-header {
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: center;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .app-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-header p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: var(--spacing-xs) 0 0 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: var(--spacing-md);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .language-selector label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+            padding-left: var(--spacing-sm);
+        }
+
+        .language-dropdown {
+            width: 100%;
+            padding: 14px var(--spacing-md);
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .language-dropdown:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.2);
+        }
+
+        /* Joke Display */
+        .joke-container {
+            flex: 1;
+            background: var(--bg-surface);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
+            min-height: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
         }
 
-        .joke-display::before {
+        .joke-container::before {
             content: "😂";
             position: absolute;
-            top: 15px;
+            top: 20px;
             left: 20px;
             font-size: 40px;
-            opacity: 0.2;
+            opacity: 0.1;
         }
 
-        .joke-display::after {
+        .joke-container::after {
             content: "🤣";
             position: absolute;
-            bottom: 15px;
+            bottom: 20px;
             right: 20px;
             font-size: 40px;
-            opacity: 0.2;
+            opacity: 0.1;
         }
 
         .joke-content {
@@ -193,521 +204,456 @@
         }
 
         .joke-single {
-            font-size: 1.4rem;
-            line-height: 1.8;
-            color: var(--dark);
-            font-family: 'Comic Neue', cursive;
+            font-size: 20px;
+            line-height: 1.5;
+            color: var(--text-primary);
             font-weight: 500;
+            padding: var(--spacing-md);
         }
 
         .joke-setup {
-            font-size: 1.4rem;
+            font-size: 20px;
             font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 25px;
-            line-height: 1.6;
-            font-family: 'Comic Neue', cursive;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.5;
         }
 
         .joke-delivery {
-            font-size: 1.35rem;
-            color: var(--primary);
-            font-weight: 700;
-            line-height: 1.6;
-            font-family: 'Comic Neue', cursive;
-            padding: 15px;
-            background: rgba(124, 58, 237, 0.05);
+            font-size: 18px;
+            color: var(--accent);
+            font-weight: 500;
+            line-height: 1.5;
+            padding: var(--spacing-md);
+            background: rgba(187, 134, 252, 0.1);
             border-radius: 12px;
-            border-left: 4px solid var(--primary);
+            border-left: 3px solid var(--accent);
         }
 
+        /* Loading State */
         .loading-state {
             text-align: center;
-            color: var(--primary);
+            padding: var(--spacing-xl);
         }
 
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            border-width: 0.3em;
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(187, 134, 252, 0.3);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--spacing-md);
         }
 
-        .error-state {
-            text-align: center;
-            color: var(--danger);
-        }
-
+        /* Joke Meta */
         .joke-meta {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
             flex-wrap: wrap;
-        }
-
-        .badge-custom {
-            padding: 10px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .badge-category {
-            background: #ede9fe;
-            color: #7c3aed;
-            border: 1px solid #ddd6fe;
-        }
-
-        .badge-type {
-            background: #fef3c7;
-            color: #d97706;
-            border: 1px solid #fde68a;
-        }
-
-        .action-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .btn-custom {
-            padding: 16px 24px;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 12px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        .btn-primary-custom {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            grid-column: span 2;
-        }
-
-        .btn-primary-custom:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
-        }
-
-        .btn-outline-custom {
-            background: white;
-            border: 2px solid #e2e8f0;
-            color: var(--dark);
-        }
-
-        .btn-outline-custom:hover {
-            background: var(--light);
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .btn-favorite {
-            background: white;
-            border: 2px solid #fecaca;
-            color: #ef4444;
-        }
-
-        .btn-favorite:hover, .btn-favorite.active {
-            background: linear-gradient(135deg, #fecaca, #fca5a5);
-            border-color: #ef4444;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-share {
-            background: white;
-            border: 2px solid #bae6fd;
-            color: #0ea5e9;
-        }
-
-        .btn-share:hover {
-            background: linear-gradient(135deg, #bae6fd, #7dd3fc);
-            border-color: #0ea5e9;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-favorites {
-            background: white;
-            border: 2px solid #a7f3d0;
-            color: #10b981;
-        }
-
-        .btn-favorites:hover {
-            background: linear-gradient(135deg, #a7f3d0, #6ee7b7);
-            border-color: #10b981;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .btn-custom:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .footer-text {
-            text-align: center;
-            margin-top: 25px;
-            color: white;
-            font-size: 0.9rem;
-            opacity: 0.9;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        .footer-text a {
-            color: white;
-            text-decoration: underline;
-            font-weight: 600;
-        }
-
-        .emoji-large {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .emoji-button {
-            font-size: 1.2rem;
-        }
-
-        .toast-notification {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: white;
-            padding: 18px 24px;
-            border-radius: 14px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        .meta-badge {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 12px;
-            z-index: 9999;
-            animation: slideInRight 0.3s ease-out;
-            border-left: 5px solid;
-            max-width: 350px;
+            gap: 6px;
+            color: var(--text-secondary);
         }
 
-        .toast-notification.success {
-            border-left-color: var(--success);
-        }
-
-        .toast-notification.error {
-            border-left-color: var(--danger);
-        }
-
-        .toast-notification.warning {
-            border-left-color: var(--warning);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.4s ease-in;
-        }
-
-        .pulse {
-            animation: pulse 0.5s ease-in-out;
-        }
-
-        .reaction-buttons {
+        /* Reaction Buttons */
+        .reactions {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
         }
 
         .reaction-btn {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 50px;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 24px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
+        .reaction-btn.active {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            background: rgba(187, 134, 252, 0.1);
+        }
+
         .reaction-btn:hover {
-            transform: translateY(-5px) scale(1.1);
+            transform: scale(1.05);
         }
 
-        .reaction-btn.liked {
-            background: #fecaca;
-            border-color: #ef4444;
-            color: #ef4444;
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-sm);
+            margin-top: auto;
         }
 
-        .reaction-btn.laughed {
-            background: #fef3c7;
-            border-color: #f59e0b;
-            color: #d97706;
+        .action-btn {
+            padding: 14px;
+            background: var(--bg-surface);
+            border: none;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
         }
 
-        .reaction-btn.meh {
-            background: #d1d5db;
-            border-color: #6b7280;
-            color: #6b7280;
+        .action-btn i {
+            font-size: 20px;
         }
 
-        @media (max-width: 576px) {
-            .card-header-custom {
-                padding: 30px 20px;
+        .action-btn.primary {
+            background: var(--accent);
+            color: #000;
+            font-weight: 600;
+            grid-column: span 2;
+        }
+
+        .action-btn.favorite.active {
+            color: var(--error);
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 90%;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .toast i {
+            font-size: 18px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            background: var(--bg-surface);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-sm) var(--spacing-md);
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .nav-item {
+            padding: var(--spacing-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.2s;
+            border-radius: 8px;
+            min-width: 64px;
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+            background: rgba(187, 134, 252, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        /* Animations */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
             }
-
-            .card-header-custom h1 {
-                font-size: 2rem;
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
             }
+        }
 
-            .card-body-custom {
-                padding: 30px 20px;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-            .joke-display {
-                padding: 30px 20px;
-                min-height: 220px;
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .joke-container {
+                min-height: 240px;
+                padding: var(--spacing-lg);
             }
 
             .joke-single,
-            .joke-setup,
+            .joke-setup {
+                font-size: 18px;
+            }
+
             .joke-delivery {
-                font-size: 1.2rem;
+                font-size: 16px;
             }
 
             .action-buttons {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .btn-primary-custom {
-                grid-column: span 1;
+            .action-btn.primary {
+                grid-column: span 2;
+                order: -1;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .joke-container {
+                min-height: 200px;
             }
 
-            .toast-notification {
-                top: 20px;
-                right: 20px;
-                left: 20px;
-                max-width: none;
+            .app-header {
+                padding: var(--spacing-sm) var(--spacing-md);
             }
+        }
+
+        /* Hide scrollbar */
+        .main-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .main-content {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
 
 <body ng-controller="JokeController">
-    <!-- Toast Notification -->
-    <div id="toast" class="toast-notification" ng-class="toast.type" ng-if="toast.show">
-        <i class="fas fa-2x" 
-           ng-class="{'fa-check-circle text-success': toast.type === 'success', 
-                     'fa-exclamation-circle text-danger': toast.type === 'error',
-                     'fa-exclamation-triangle text-warning': toast.type === 'warning'}"></i>
-        <div>
-            <strong>{{ toast.title || 'Notification' }}</strong>
-            <div>{{ toast.message }}</div>
+    <!-- Status Bar (Simulated) -->
+    <div class="status-bar">
+        <div class="time" id="currentTime">9:41</div>
+        <div class="status-icons">
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-full"></i>
         </div>
-        <button class="btn-close ms-auto" ng-click="toast.show = false"></button>
     </div>
 
+    <!-- Toast Notification -->
+    <div class="toast" ng-class="toast.type" ng-if="toast.show">
+        <i class="fas" 
+           ng-class="{'fa-check-circle': toast.type === 'success', 
+                     'fa-exclamation-circle': toast.type === 'error',
+                     'fa-info-circle': toast.type === 'info'}"></i>
+        <span>{{ toast.message }}</span>
+    </div>
+
+    <!-- App Container -->
     <div class="app-container">
-        <div class="main-card">
-            <!-- Header -->
-            <div class="card-header-custom">
-                <div class="emoji-large">😂</div>
-                <h1>
-                    <i class="fas fa-laugh-beam"></i> Random Joke Generator
-                </h1>
-                <p>Laugh out loud with jokes in multiple languages! No signup required.</p>
-            </div>
-
-            <!-- Body -->
-            <div class="card-body-custom">
-                <!-- Language Selector -->
-                <div class="language-section">
-                    <label for="langSelect">
-                        <i class="fas fa-language"></i> Select Language
-                    </label>
-                    <select id="langSelect" class="form-select" ng-model="lang" ng-change="loadJoke()" ng-disabled="loading">
-                        <option ng-repeat="l in languages" value="{{ l.code }}">
-                            <span class="emoji-button">{{ l.flag }}</span> {{ l.name }}
-                        </option>
-                    </select>
-                </div>
-
-                <!-- Joke Display -->
-                <div class="joke-display">
-                    <!-- Loading State -->
-                    <div ng-if="loading" class="loading-state">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="mt-3 mb-0">Fetching a hilarious joke for you... 🤪</p>
-                    </div>
-
-                    <!-- Error State -->
-                    <div ng-if="!loading && error" class="error-state fade-in">
-                        <div class="emoji-large">😕</div>
-                        <h5>Oops! Something went wrong</h5>
-                        <p class="mb-0">{{ error }}</p>
-                    </div>
-
-                    <!-- Joke Content -->
-                    <div ng-if="!loading && !error && joke" class="joke-content fade-in">
-                        <!-- Single-part joke -->
-                        <div ng-if="joke.type === 'single'" class="joke-single">
-                            "{{ joke.joke }}"
-                        </div>
-
-                        <!-- Two-part joke -->
-                        <div ng-if="joke.type === 'twopart'">
-                            <div class="joke-setup">"{{ joke.setup }}"</div>
-                            <div class="emoji-large">👇</div>
-                            <div class="joke-delivery">"{{ joke.delivery }}"</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Joke Metadata -->
-                <div ng-if="!loading && !error && joke" class="joke-meta fade-in">
-                    <span class="badge-custom badge-category">
-                        <i class="fas fa-tag"></i> {{ joke.category || 'Any' }}
-                    </span>
-                    <span class="badge-custom badge-type">
-                        <i class="fas fa-list"></i> {{ joke.type || 'single' }}
-                    </span>
-                    <span class="badge-custom" style="background: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe;">
-                        <i class="fas fa-language"></i> {{ getLanguageName(lang) }}
-                    </span>
-                </div>
-
-                <!-- Reaction Buttons -->
-                <div ng-if="!loading && !error && joke" class="reaction-buttons fade-in">
-                    <div class="reaction-btn" ng-class="{liked: reaction === 'like'}" ng-click="setReaction('like')">
-                        👍
-                    </div>
-                    <div class="reaction-btn" ng-class="{laughed: reaction === 'laugh'}" ng-click="setReaction('laugh')">
-                        😂
-                    </div>
-                    <div class="reaction-btn" ng-class="{meh: reaction === 'meh'}" ng-click="setReaction('meh')">
-                        😑
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="action-buttons mt-4">
-                    <button class="btn btn-custom btn-primary-custom" ng-click="loadJoke()" ng-disabled="loading">
-                        <i class="fas fa-sync-alt" ng-class="{'fa-spin': loading}"></i>
-                        <span ng-if="!loading">Get New Joke 🤣</span>
-                        <span ng-if="loading">Loading Joke...</span>
-                    </button>
-
-                    <button class="btn btn-custom btn-favorite" ng-click="markFavorite()" ng-disabled="loading || !joke" ng-class="{'active': isFavorite()}">
-                        <i class="fas" ng-class="isFavorite() ? 'fa-heart' : 'fa-heart'"></i>
-                        {{ isFavorite() ? 'Favorited ❤️' : 'Favorite 🤍' }}
-                    </button>
-
-                    <button class="btn btn-custom btn-share" ng-click="shareJoke()" ng-disabled="loading || !joke">
-                        <i class="fas fa-share-alt"></i> Share 📤
-                    </button>
-
-                    <button class="btn btn-custom btn-favorites" ng-click="viewFavorites()" ng-disabled="loading">
-                        <i class="fas fa-list"></i> Favorites ({{ favoritesCount }})
-                    </button>
-                </div>
-            </div>
+        <!-- Header -->
+        <div class="app-header">
+            <h1>Joke Generator</h1>
+            <p>Laugh out loud, anytime, anywhere</p>
         </div>
 
-        <!-- Footer -->
-        <div class="footer-text">
-            <p class="mb-0">
-                Powered by <a href="https://jokeapi.dev/" target="_blank">JokeAPI</a> |
-                Made with <i class="fas fa-heart text-danger"></i> and AngularJS |
-                😂 Keep laughing!
-            </p>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Language Selector -->
+            <div class="language-selector">
+                <label for="language"><i class="fas fa-globe"></i> Language</label>
+                <select id="language" class="language-dropdown" ng-model="lang" ng-change="loadJoke()" ng-disabled="loading">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="it">Italian</option>
+                    <option value="pt">Portuguese</option>
+                </select>
+            </div>
+
+            <!-- Joke Container -->
+            <div class="joke-container">
+                <!-- Loading State -->
+                <div ng-if="loading" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Fetching a joke...</p>
+                </div>
+
+                <!-- Error State -->
+                <div ng-if="!loading && error" class="loading-state fade-in">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 40px; color: var(--error); margin-bottom: 16px;"></i>
+                    <h3>Oops!</h3>
+                    <p style="color: var(--text-secondary);">{{ error }}</p>
+                    <button class="action-btn primary" style="margin-top: 16px;" ng-click="loadJoke()">
+                        Try Again
+                    </button>
+                </div>
+
+                <!-- Joke Content -->
+                <div ng-if="!loading && !error && joke" class="joke-content fade-in">
+                    <!-- Single-part joke -->
+                    <div ng-if="joke.type === 'single'" class="joke-single">
+                        "{{ joke.joke }}"
+                    </div>
+
+                    <!-- Two-part joke -->
+                    <div ng-if="joke.type === 'twopart'">
+                        <div class="joke-setup">"{{ joke.setup }}"</div>
+                        <div style="margin: 16px 0; font-size: 24px;">👇</div>
+                        <div class="joke-delivery">"{{ joke.delivery }}"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Joke Metadata -->
+            <div ng-if="!loading && !error && joke" class="joke-meta fade-in">
+                <span class="meta-badge">
+                    <i class="fas fa-tag"></i> {{ joke.category || 'General' }}
+                </span>
+                <span class="meta-badge">
+                    <i class="fas" ng-class="joke.type === 'single' ? 'fa-comment' : 'fa-comments'"></i>
+                    {{ joke.type === 'single' ? 'One-liner' : 'Two-part' }}
+                </span>
+            </div>
+
+            <!-- Reaction Buttons -->
+            <div ng-if="!loading && !error && joke" class="reactions fade-in">
+                <div class="reaction-btn" ng-class="{active: reaction === 'like'}" ng-click="setReaction('like')">
+                    👍
+                </div>
+                <div class="reaction-btn" ng-class="{active: reaction === 'laugh'}" ng-click="setReaction('laugh')">
+                    😂
+                </div>
+                <div class="reaction-btn" ng-class="{active: reaction === 'meh'}" ng-click="setReaction('meh')">
+                    😑
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn primary" ng-click="loadJoke()" ng-disabled="loading">
+                    <i class="fas fa-sync-alt" ng-class="{'fa-spin': loading}"></i>
+                    New Joke
+                </button>
+                
+                <button class="action-btn favorite" ng-class="{active: isFavorite()}" ng-click="markFavorite()" ng-disabled="loading || !joke">
+                    <i class="fas" ng-class="isFavorite() ? 'fa-heart' : 'fa-heart'"></i>
+                    Favorite
+                </button>
+                
+                <button class="action-btn" ng-click="shareJoke()" ng-disabled="loading || !joke">
+                    <i class="fas fa-share-alt"></i>
+                    Share
+                </button>
+                
+                <button class="action-btn" ng-click="copyJoke()" ng-disabled="loading || !joke">
+                    <i class="fas fa-copy"></i>
+                    Copy
+                </button>
+            </div>
         </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fas fa-laugh"></i>
+            Jokes
+        </a>
+        <a href="#" class="nav-item" ng-click="viewFavorites()">
+            <i class="fas fa-heart"></i>
+            Favorites
+            <span style="font-size: 10px; background: var(--accent); color: #000; padding: 2px 6px; border-radius: 10px; margin-top: 2px;">
+                {{favoritesCount}}
+            </span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-history"></i>
+            History
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-cog"></i>
+            Settings
+        </a>
     </div>
 
     <script>
-        angular.module("jokeApp", [])
-            .controller("JokeController", function ($scope, $http, $timeout) {
-                // Initialize data
-                $scope.languages = [
-                    { code: "en", name: "English", flag: "🇬🇧" },
-                    { code: "de", name: "German", flag: "🇩🇪" },
-                    { code: "es", name: "Spanish", flag: "🇪🇸" },
-                    { code: "fr", name: "French", flag: "🇫🇷" },
-                    { code: "pt", name: "Portuguese", flag: "🇵🇹" },
-                    { code: "cs", name: "Czech", flag: "🇨🇿" },
-                    { code: "ru", name: "Russian", flag: "🇷🇺" }
-                ];
+        // Update time in status bar
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                             now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        setInterval(updateTime, 60000);
+        updateTime();
 
+        angular.module("jokeApp", [])
+            .controller("JokeController", function ($scope, $timeout) {
+                // Initialize data
                 $scope.lang = "en";
                 $scope.loading = false;
                 $scope.joke = null;
                 $scope.error = null;
                 $scope.reaction = null;
-                $scope.toast = { show: false, message: '', type: 'success', title: '' };
+                $scope.toast = { show: false, message: '', type: 'success' };
                 $scope.favoritesCount = 0;
                 $scope.favorites = [];
 
-                // Helper function to get language name
-                $scope.getLanguageName = function(code) {
-                    const lang = $scope.languages.find(l => l.code === code);
-                    return lang ? lang.name : 'Unknown';
-                };
-
-                // Load favorites on init
+                // Load favorites
                 $scope.loadFavorites = function() {
                     try {
                         $scope.favorites = JSON.parse(localStorage.getItem('jokeFavorites') || '[]');
@@ -731,53 +677,47 @@
                     });
                 };
 
-                // Show toast notification
-                $scope.showToast = function(message, type, title) {
+                // Show toast
+                $scope.showToast = function(message, type) {
                     $scope.toast = { 
                         show: true, 
                         message: message, 
-                        type: type || 'success',
-                        title: title || (type === 'success' ? 'Success!' : type === 'error' ? 'Error!' : 'Notice')
+                        type: type || 'success'
                     };
                     
-                    // Auto-hide after 4 seconds
                     $timeout(function() {
                         $scope.toast.show = false;
-                    }, 4000);
+                    }, 3000);
                 };
 
-                // Set reaction to joke
+                // Set reaction
                 $scope.setReaction = function(reactionType) {
                     $scope.reaction = $scope.reaction === reactionType ? null : reactionType;
                     
-                    const reactions = {
-                        'like': { emoji: '👍', message: 'You liked this joke!' },
-                        'laugh': { emoji: '😂', message: 'This joke made you laugh!' },
-                        'meh': { emoji: '😑', message: 'Meh, this joke was okay.' }
+                    const messages = {
+                        'like': 'Liked this joke 👍',
+                        'laugh': 'Laughed out loud 😂',
+                        'meh': 'Meh, not that funny 😑'
                     };
                     
                     if ($scope.reaction) {
-                        $scope.showToast(reactions[reactionType].message, 'success', reactions[reactionType].emoji);
+                        $scope.showToast(messages[reactionType], 'info');
                     }
                 };
 
-                // Load joke from API
+                // Load joke
                 $scope.loadJoke = function() {
                     $scope.loading = true;
                     $scope.error = null;
                     $scope.reaction = null;
                     
-                    // For demo purposes, we'll use mock data since JokeAPI requires a specific endpoint
-                    // In production, you'd use: var url = "/api/joke?lang=" + $scope.lang;
-                    
-                    // Mock API call with timeout to simulate network delay
                     $timeout(function() {
-                        // Mock jokes for demo
                         const mockJokes = {
                             'en': [
                                 { type: 'single', joke: 'Why don\'t scientists trust atoms? Because they make up everything!', category: 'Science' },
                                 { type: 'twopart', setup: 'Why did the scarecrow win an award?', delivery: 'Because he was outstanding in his field!', category: 'Puns' },
-                                { type: 'single', joke: 'I told my wife she was drawing her eyebrows too high. She looked surprised.', category: 'Puns' }
+                                { type: 'single', joke: 'I told my wife she was drawing her eyebrows too high. She looked surprised.', category: 'Puns' },
+                                { type: 'single', joke: 'What do you call a bear with no teeth? A gummy bear.', category: 'Animals' }
                             ],
                             'es': [
                                 { type: 'single', joke: '¿Por qué los pájaros no usan Facebook? Porque ya tienen Twitter.', category: 'Animals' },
@@ -785,6 +725,15 @@
                             ],
                             'fr': [
                                 { type: 'single', joke: 'Pourquoi les plongeurs plongent-ils toujours en arrière et jamais en avant ? Parce que sinon ils tombent dans le bateau.', category: 'Sport' }
+                            ],
+                            'de': [
+                                { type: 'single', joke: 'Warum können Geister keine Lügen erzählen? Weil man durch sie hindurchsieht.', category: 'Fantasy' }
+                            ],
+                            'it': [
+                                { type: 'single', joke: 'Cosa dice un semaforo all\'altro? Non guardarmi, sto cambiando!', category: 'Puns' }
+                            ],
+                            'pt': [
+                                { type: 'single', joke: 'Por que o livro de matemática se suicidou? Porque tinha muitos problemas.', category: 'Puns' }
                             ]
                         };
                         
@@ -794,19 +743,17 @@
                         $scope.joke = randomJoke;
                         $scope.loading = false;
                         
-                        // Show joke loaded message
-                        $scope.showToast('New joke loaded! Hope it makes you laugh! 😄', 'success', 'Joke Loaded!');
-                    }, 800); // Simulate network delay
+                        $scope.showToast('New joke loaded!', 'success');
+                    }, 800);
                 };
 
-                // Mark joke as favorite
+                // Mark as favorite
                 $scope.markFavorite = function() {
                     if (!$scope.joke) return;
                     
                     const isCurrentlyFavorite = $scope.isFavorite();
                     
                     if (isCurrentlyFavorite) {
-                        // Remove from favorites
                         $scope.favorites = $scope.favorites.filter(function(fav) {
                             if ($scope.joke.type === 'single') {
                                 return fav.joke !== $scope.joke.joke;
@@ -817,9 +764,8 @@
                         
                         localStorage.setItem('jokeFavorites', JSON.stringify($scope.favorites));
                         $scope.favoritesCount = $scope.favorites.length;
-                        $scope.showToast('Joke removed from favorites', 'warning', 'Removed ❤️');
+                        $scope.showToast('Removed from favorites', 'info');
                     } else {
-                        // Add to favorites
                         const favoriteJoke = {
                             type: $scope.joke.type,
                             category: $scope.joke.category,
@@ -833,7 +779,7 @@
                         $scope.favorites.push(favoriteJoke);
                         localStorage.setItem('jokeFavorites', JSON.stringify($scope.favorites));
                         $scope.favoritesCount = $scope.favorites.length;
-                        $scope.showToast('Joke added to favorites!', 'success', 'Favorited! ❤️');
+                        $scope.showToast('Added to favorites', 'success');
                     }
                 };
 
@@ -849,44 +795,46 @@
                         jokeText = $scope.joke.setup + '\n\n' + $scope.joke.delivery;
                     }
                     
-                    // Try Web Share API
                     if (navigator.share) {
                         navigator.share({
-                            title: 'Check out this hilarious joke! 😂',
-                            text: jokeText + '\n\nShared from Random Joke Generator',
+                            title: 'Check out this joke!',
+                            text: jokeText,
                             url: window.location.href
-                        }).then(function() {
-                            $scope.showToast('Joke shared successfully!', 'success', 'Shared! 📤');
-                            $scope.$apply();
-                        }).catch(function(error) {
-                            if (error.name !== 'AbortError') {
-                                $scope.copyToClipboard(jokeText);
-                            }
+                        }).catch(function() {
+                            $scope.copyToClipboard(jokeText);
                         });
                     } else {
-                        // Fallback to clipboard
                         $scope.copyToClipboard(jokeText);
                     }
                 };
 
-                // Copy to clipboard helper
+                // Copy joke
+                $scope.copyJoke = function() {
+                    if (!$scope.joke) return;
+                    
+                    let jokeText = '';
+                    
+                    if ($scope.joke.type === 'single') {
+                        jokeText = $scope.joke.joke;
+                    } else {
+                        jokeText = $scope.joke.setup + '\n\n' + $scope.joke.delivery;
+                    }
+                    
+                    $scope.copyToClipboard(jokeText);
+                };
+
+                // Copy to clipboard
                 $scope.copyToClipboard = function(text) {
-                    const fullText = text + '\n\nShared from Random Joke Generator 😄';
+                    const fullText = text + '\n\nShared from Joke Generator App';
                     
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(fullText)
                             .then(function() {
                                 $scope.$apply(function() {
-                                    $scope.showToast('Joke copied to clipboard!', 'success', 'Copied! 📋');
-                                });
-                            })
-                            .catch(function() {
-                                $scope.$apply(function() {
-                                    $scope.showToast('Failed to copy joke', 'error', 'Error!');
+                                    $scope.showToast('Copied to clipboard', 'success');
                                 });
                             });
                     } else {
-                        // Fallback for older browsers
                         const textArea = document.createElement("textarea");
                         textArea.value = fullText;
                         textArea.style.position = "fixed";
@@ -895,9 +843,9 @@
                         textArea.select();
                         try {
                             document.execCommand('copy');
-                            $scope.showToast('Joke copied to clipboard!', 'success', 'Copied! 📋');
+                            $scope.showToast('Copied to clipboard', 'success');
                         } catch (err) {
-                            $scope.showToast('Failed to copy joke', 'error', 'Error!');
+                            $scope.showToast('Failed to copy', 'error');
                         }
                         document.body.removeChild(textArea);
                     }
@@ -906,33 +854,26 @@
                 // View favorites
                 $scope.viewFavorites = function() {
                     if ($scope.favorites.length === 0) {
-                        $scope.showToast('No favorites yet! Add some jokes you love.', 'warning', 'No Favorites 😢');
+                        $scope.showToast('No favorites yet', 'info');
                         return;
                     }
                     
-                    const favoriteEmojis = ['❤️', '😍', '🤩', '😄', '😂'];
-                    const randomEmoji = favoriteEmojis[Math.floor(Math.random() * favoriteEmojis.length)];
-                    
-                    const message = `You have ${$scope.favorites.length} favorite joke(s)! ${randomEmoji}\n\n` +
-                                   `View them in your browser console (F12) or clear them using the button below.`;
-                    
-                    // Log favorites to console for viewing
-                    console.log('=== YOUR FAVORITE JOKES ===');
+                    let message = `You have ${$scope.favorites.length} favorite joke(s):\n\n`;
                     $scope.favorites.forEach((fav, index) => {
-                        console.log(`\n${index + 1}. [${fav.language.toUpperCase()}] ${fav.category}`);
                         if (fav.type === 'single') {
-                            console.log(`   "${fav.joke}"`);
+                            message += `${index + 1}. "${fav.joke}"\n`;
                         } else {
-                            console.log(`   Q: "${fav.setup}"`);
-                            console.log(`   A: "${fav.delivery}"`);
+                            message += `${index + 1}. Q: "${fav.setup}"\n   A: "${fav.delivery}"\n`;
                         }
-                        console.log(`   Saved: ${new Date(fav.savedAt).toLocaleDateString()}`);
+                        message += `   (${fav.category}, ${fav.language})\n\n`;
                     });
                     
-                    if (confirm(message + '\n\nWould you like to clear all favorites?')) {
+                    message += 'View in console (F12) for details. Clear favorites?';
+                    
+                    if (confirm(message)) {
                         localStorage.removeItem('jokeFavorites');
                         $scope.loadFavorites();
-                        $scope.showToast('All favorites cleared!', 'warning', 'Cleared! 🗑️');
+                        $scope.showToast('All favorites cleared', 'info');
                     }
                 };
 
@@ -941,9 +882,6 @@
                 $scope.loadJoke();
             });
     </script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
